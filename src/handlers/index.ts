@@ -1,9 +1,18 @@
 import User from "../models/User"
+import slug from 'slug'
+import { validationResult } from 'express-validator'
 import { hashPassword } from '../utils/auth'
 
 
 //Se tiene any y se debe de evitar porque se puede usar el valor que sea
 export const createAccount = async (req, res) => {
+
+  // Manejar errores
+  let errors = validationResult(req)
+  console.log(errors)
+  if (!errors.isEmpty()) {
+    return res.status(400).json({errors: errors.array()})
+  }
   
   const { email, password } = req.body
 
@@ -15,7 +24,6 @@ export const createAccount = async (req, res) => {
   }
 
   //Comprobacion de handle 
-  const slug = (await import('slug')).default;
   const handle = slug(req.body.handle, '_')
   const handleExists = await User.findOne({handle})
   if (handleExists) {
