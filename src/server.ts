@@ -7,7 +7,7 @@ const app = express(); // Instancia del servidor
 
 connectDB()
 
-//Leer datos de formularios
+//Leer datos de formularios (es middleware global)
 app.use(express.json())
 
 

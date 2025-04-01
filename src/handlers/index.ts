@@ -7,13 +7,6 @@ import { checkPassword, hashPassword } from '../utils/auth'
 
 //Se tiene any y se debe de evitar porque se puede usar el valor que sea
 export const createAccount = async (req: Request, res) => {
-
-  // Manejar errores creados en router
-  let errors = validationResult(req)
-  console.log(errors)
-  if (!errors.isEmpty()) {
-    return res.status(400).json({errors: errors.array()})
-  }
   
   const { email, password } = req.body
 
@@ -43,13 +36,7 @@ export const createAccount = async (req: Request, res) => {
 
 
 export const login = async (req: Request, res) => {
-  // Manejar errores creados en router
-  let errors = validationResult(req)
-  console.log(errors)
-  if (!errors.isEmpty()) {
-    return res.status(400).json({errors: errors.array()})
-  }
-
+  
   const { email, password } = req.body
 
   //Comprobacion de email (ver si esta registrado)
