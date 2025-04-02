@@ -2,6 +2,7 @@ import {Request, Response} from 'express'
 import User from "../models/User"
 import slug from 'slug'
 import { checkPassword, hashPassword } from '../utils/auth'
+import { generateJWT } from './jwt'
 
 
 //Se tiene any y se debe de evitar porque se puede usar el valor que sea
@@ -55,6 +56,9 @@ export const login = async (req: Request, res: Response) => {
     res.status(401).json({error: error.message})
     return
   }
-  
-  res.send('Autenticado')
+
+  //Se retorna JWT (solamente se manda el id)
+  const token = generateJWT({id: user._id})
+
+  res.send(token)
 }
