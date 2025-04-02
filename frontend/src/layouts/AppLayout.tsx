@@ -4,6 +4,8 @@ import NavigationTabs from "../components/NavigationTabs";
 
 export default function AppLayout() {
 
+ 
+  
 
   return (
     <>
