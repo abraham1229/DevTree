@@ -14,7 +14,7 @@ export const authenticate = async (req:Request, res: Response, next: NextFunctio
   const bearer = req.headers.authorization
   // No se recibe bearer
   if (!bearer) {
-    const error = new Error('Usuario no identificado')
+    const error = new Error('No autorizado')
     res.status(401).json({ error: error.message })
     return
   }
@@ -23,7 +23,7 @@ export const authenticate = async (req:Request, res: Response, next: NextFunctio
 
 
   if (!token) {
-    const error = new Error('Usuario no autorizado')
+    const error = new Error('No autorizado')
     res.status(401).json({ error: error.message })
     return
   }
