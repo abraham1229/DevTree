@@ -5,7 +5,8 @@ export interface IUser {
   handle: string
   name: string,
   email: string,
-  password: string
+  password: string,
+  description: string
 }
 
 //Codigo de Schema en mongo
@@ -32,6 +33,11 @@ const userSchema = new Schema({
   password: {
     type: String,
     required: true,
+    trim: true
+  },
+  description: {
+    type: String,
+    default: '',
     trim: true
   }
 })
