@@ -17,6 +17,7 @@ export default function LoginView() {
     try {
       const {data} = await api.post('/auth/login', formData)
       localStorage.setItem('AUTH_TOKEN', data)
+      toast.success('Credenciales correctas')
     } catch(error) {
       if (isAxiosError(error) && error.response) {
         toast.error(error.response.data.error)
