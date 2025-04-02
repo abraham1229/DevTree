@@ -5,7 +5,6 @@ import DevTree from "../components/DevTree";
 
 export default function AppLayout() {
 
-
   const { data, isLoading, isError} = useQuery({
     queryFn: getUser,
     queryKey: ['user'],
@@ -17,9 +16,6 @@ export default function AppLayout() {
   if (isError) {
     return <Navigate to={'/auth/login'}/>
   }
-
-
-  console.log(data)
 
   if (data) return <DevTree data={data} />
 }

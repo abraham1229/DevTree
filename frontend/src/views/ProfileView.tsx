@@ -1,18 +1,22 @@
 import { useForm } from 'react-hook-form'
 import ErrorMessage from '../components/ErrorMessage'
+import { useQueryClient } from '@tanstack/react-query'
+import { ProfileForm, User } from '../types'
 
 export default function ProfileView() {
+  const queryClient = useQueryClient()
 
+  const data: User = queryClient.getQueryData(['user'])!
 
-
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const { register, handleSubmit, formState: { errors } } = useForm<ProfileForm>({
     defaultValues: {
-      handle: ''
+      handle: data.handle,
+      description: data.description
     }
   })
   
-  const handleUserProfileForm = () => {
-    console.log('desde handleuserprofileform') 
+  const handleUserProfileForm = (formData: ProfileForm) => {
+    console.log(formData) 
   }
 
   return (
@@ -43,6 +47,7 @@ export default function ProfileView() {
         <textarea
           className="border-none bg-slate-100 rounded-lg p-2"
           placeholder="Tu Descripción"
+          {...register('description')}
         />
       </div>
 
