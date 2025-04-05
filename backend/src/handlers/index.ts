@@ -65,7 +65,7 @@ export const getUser = async (req: Request, res: Response) => {
 export const updateProfile = async (req: Request, res: Response) => {
   try {
     const { description } = req.body;
-    console.log(description)
+    
     //Comprobacion de handle
     const handle = slug(req.body.handle, "");
     const handleExists = await User.findOne({ handle });
