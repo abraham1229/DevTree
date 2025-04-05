@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form'
 import ErrorMessage from '../components/ErrorMessage'
 import { useQueryClient, useMutation } from '@tanstack/react-query'
+import { toast } from 'sonner'
 import { ProfileForm, User } from '../types'
 import { updateProfile } from '../api/DebTreeAPI'
 
@@ -20,9 +21,11 @@ export default function ProfileView() {
     mutationFn: updateProfile,
     onError: () => {
       console.log('Hubo un error')
+      toast.error("Hubo un error")
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       console.log('Todo correcto')
+      toast.success(data)
     }
   })
   
