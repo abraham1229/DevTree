@@ -19,13 +19,12 @@ export default function ProfileView() {
 
   const updateProfileMutation = useMutation({
     mutationFn: updateProfile,
-    onError: () => {
-      console.log('Hubo un error')
-      toast.error("Hubo un error")
+    onError: (error) => {
+      toast.error(error.message)
     },
     onSuccess: (data) => {
-      console.log('Todo correcto')
       toast.success(data)
+      queryClient.invalidateQueries({ queryKey: ['user']})
     }
   })
   
