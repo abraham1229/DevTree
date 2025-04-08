@@ -7,7 +7,8 @@ export interface IUser extends Document {
   email: string,
   password: string,
   description: string,
-  image: string
+  image: string,
+  links: string
 }
 
 //Codigo de Schema en mongo
@@ -45,6 +46,10 @@ const userSchema = new Schema({
     type: String,
     default: '',
     trim: true
+  },
+  links: {
+    type: String,
+    default: '[]'
   }
 })
 
