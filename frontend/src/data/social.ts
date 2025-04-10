@@ -1,4 +1,4 @@
-import { DevTreeLink } from "../../types";
+import { DevTreeLink } from "../types";
 
 export const social: DevTreeLink[] = [
   { name: 'facebook', url: '', enabled: false },

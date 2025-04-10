@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { social } from "../layouts/data/social"
+import { social } from "../data/social"
 import DevTreeInput from "../components/DevTreeInput"
 import { isValidUrl } from "../utils"
 import { toast } from "sonner"
