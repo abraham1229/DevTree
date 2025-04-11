@@ -111,8 +111,6 @@ export default function LinkTreeView() {
       })
     }
 
-    console.log(updatedItems)
-
     //Se almacena en la base de datos
     queryClient.setQueryData(['user'], (prevData: User) => {
       return {
