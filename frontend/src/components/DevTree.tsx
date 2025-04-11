@@ -1,9 +1,12 @@
 import { Link, Outlet } from 'react-router-dom'
 import { Toaster } from 'sonner'
+import { DndContext, DragEndEvent, closestCenter } from '@dnd-kit/core'
+import { SortableContext, verticalListSortingStrategy, arrayMove } from '@dnd-kit/sortable'
 import NavigationTabs from './NavigationTabs'
 import { SocialNetwork, User } from '../types'
 import { useEffect, useState } from 'react'
 import DevTreeLink from './DevTreeLink'
+import { useQueryClient } from '@tanstack/react-query'
 
 type DevTreeProps = {
   data: User
@@ -17,6 +20,30 @@ export default function DevTree({ data }: DevTreeProps) {
     setEnabledLinks(JSON.parse(data.links).filter((item: SocialNetwork) => item.enabled))
   
   }, [data])
+  
+  const queryClient = useQueryClient()
+  
+  const handleDragEnd = (e: DragEndEvent) => {
+    const { active, over } = e
+
+    if (over && over.id) {
+      const prevIndex = enabledLinks.findIndex(link => link.id === active.id)
+      const newIndex = enabledLinks.findIndex(link => link.id === over.id)
+      const order = arrayMove(enabledLinks, prevIndex, newIndex)
+      setEnabledLinks(order)
+      const disableLinks: SocialNetwork[] = JSON.parse(data.links).filter((item: SocialNetwork) => !item.enabled)
+
+      const allLinks = order.concat(disableLinks)
+
+      console.log(allLinks)
+      queryClient.setQueryData(['user'], (prevData: User) => {
+        return {
+          ...prevData,
+          links: JSON.stringify(allLinks)
+        }
+      } )    
+    }
+  }
   
   
   return (
@@ -62,14 +89,24 @@ export default function DevTree({ data }: DevTreeProps) {
 
               <p className='text-center text-lg font-black text-white'>{data.description}</p>
               
-              <div className='mt-20 flex flex-col gap-5'>
-                {enabledLinks.map(link => (
-                  <DevTreeLink
-                    key={link.name}
-                    link={link}
-                  />
-                ))}
-              </div>
+              <DndContext
+                collisionDetection={closestCenter}
+                onDragEnd={handleDragEnd}
+              >
+                <div className='mt-20 flex flex-col gap-5'>
+                  <SortableContext
+                    items={enabledLinks}
+                    strategy={verticalListSortingStrategy}
+                  >
+                    {enabledLinks.map(link => (
+                      <DevTreeLink
+                      key={link.name}
+                      link={link}
+                      />
+                    ))}
+                  </SortableContext>
+                </div>
+              </DndContext>
 
             </div>
           </div>
