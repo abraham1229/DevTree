@@ -93,7 +93,7 @@ export default function LinkTreeView() {
       }
 
     } else {
-      const indexToUpdate = links.findIndex(link => link.name === socialNetwork)
+      const indexToUpdate = links.find(link => link.name === socialNetwork)!
       updatedItems = links.map(link => {
         if (link.name === socialNetwork) {
           return {
@@ -101,17 +101,22 @@ export default function LinkTreeView() {
             id: 0,
             enabled: false
           }
-        } else if (link.id > indexToUpdate && (link.id !== 1)) {
+        } else if (link.id > indexToUpdate.id && (link.id !== 1)) {
+          console.log("elif", link.id, indexToUpdate)     
           return {
             ...link,
             id: link.id - 1
           }
             
         } else {
+          console.log("else")
+
           return link
         }
       })
     }
+
+    console.log(updatedItems)
 
     //Se almacena en la base de datos
     queryClient.setQueryData(['user'], (prevData: User) => {
