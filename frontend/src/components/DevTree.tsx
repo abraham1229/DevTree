@@ -35,7 +35,6 @@ export default function DevTree({ data }: DevTreeProps) {
 
       const allLinks = order.concat(disableLinks)
 
-      console.log(allLinks)
       queryClient.setQueryData(['user'], (prevData: User) => {
         return {
           ...prevData,
