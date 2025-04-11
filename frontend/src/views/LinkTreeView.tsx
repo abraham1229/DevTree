@@ -102,22 +102,17 @@ export default function LinkTreeView() {
             enabled: false
           }
         } else if (link.id > indexToUpdate.id && (link.id !== 1)) {
-          console.log("elif", link.id, indexToUpdate)     
           return {
             ...link,
             id: link.id - 1
           }
             
         } else {
-          console.log("else")
-
           return link
         }
       })
     }
-
-    console.log(updatedItems)
-
+    
     //Se almacena en la base de datos
     queryClient.setQueryData(['user'], (prevData: User) => {
       return {
