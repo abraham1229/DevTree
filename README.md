@@ -21,7 +21,7 @@ In this GitHub repo, you’ll find both the **backend** and **frontend** folders
 
 ## 🚀 Getting Started
 
-> ⚠️ Minimum required Node.js version: **18.18.0**
+> Node.js version used: **18.18.0**
 
 ### Backend
 ```bash
