@@ -4,10 +4,14 @@ import { useMutation } from '@tanstack/react-query';
 import ErrorMessage from "./ErrorMessage";
 import { searchByHandle } from '../api/DebTreeAPI';
 import { Link } from 'react-router-dom';
+import { useLoader } from '../hooks/useLoader';
+import { useEffect } from 'react';
 
 export default function SearchForm() {
 
-  const { register, handleSubmit, watch, formState: {errors} } = useForm({
+  const { setLoading } = useLoader()
+
+  const { register, handleSubmit, watch, formState: { errors } } = useForm({
     defaultValues: {
       handle: ''
     }
@@ -23,6 +27,10 @@ export default function SearchForm() {
     const slug = slugify(handle)
     mutation.mutate(slug)
   }
+
+  useEffect(() => {
+    setLoading(mutation.isPending)
+  }, [mutation.isPending, setLoading])
 
   return (
     <form
@@ -48,10 +56,9 @@ export default function SearchForm() {
       )}
 
       <div className="mt-10">
-        {mutation.isPending && <p className='text-center'>Cargando...</p>}
         {mutation.error && <p className='text-center text-red-600 font-black'>{mutation.error.message}</p>}
         {mutation.data && <p className='text-center text-cyan-500 font-black'>
-          {mutation.data} ir a <Link to={'/auth/register'} state={{handle: slugify(handle)}}>Registro </Link>
+          {mutation.data} ir a <Link to={'/auth/register'} state={{ handle: slugify(handle) }}>Registro </Link>
         </p>}
 
       </div>
